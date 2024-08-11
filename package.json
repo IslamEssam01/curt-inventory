@@ -1,15 +1,24 @@
 {
-  "name": "curt-inventory",
-  "version": "1.0.50",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
-  },
-  "dependencies": {
-    "elysia": "latest"
-  },
-  "devDependencies": {
-    "bun-types": "latest"
-  },
-  "module": "src/index.js"
+    "name": "curt-inventory",
+    "version": "1.0.50",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "bun run --watch src/index.tsx",
+        "db:push": "drizzle-kit push",
+        "db:studio": "drizzle-kit studio"
+    },
+    "dependencies": {
+        "@elysiajs/html": "^1.1.0",
+        "@elysiajs/static": "^1.1.0",
+        "@libsql/client": "^0.9.0",
+        "drizzle-orm": "^0.33.0",
+        "elysia": "latest"
+    },
+    "devDependencies": {
+        "bun-types": "latest",
+        "drizzle-kit": "^0.24.0",
+        "tailwindcss": "^3.4.9"
+    },
+    "module": "src/index.tsx",
+    "type": "module"
 }
