@@ -79,6 +79,11 @@ bun run start
 - **API Endpoints**: Interact with the inventory system via API endpoints.
 - **Authentication**: Access secure routes with valid credentials.
 
+### Users Already in Database for testing
+- username: owner , password: 123456
+- username: admin , password: 123456
+- username: user , password: 123456
+
 ### License
 
 This project is licensed under the MIT License.
