@@ -321,10 +321,10 @@ const usersPlugin = new Elysia()
     )
     .put(
         "/users/:id",
-        async ({ params: { id }, user }) => {
+        async ({ body: { role }, params: { id }, user }) => {
             const userData = await db
                 .update(users)
-                .set({ role: "admin" })
+                .set({ role: role === "admin" ? "user" : "admin" })
                 .where(eq(users.id, id))
                 .returning()
                 .get();
@@ -340,7 +340,9 @@ const usersPlugin = new Elysia()
                 />
             );
         },
+
         {
+            body: t.Object({ role: t.String() }),
             params: t.Object({ id: t.String() }),
         },
     );
@@ -494,9 +496,7 @@ new Elysia()
                     <Base>
                         <div class="grid h-[100vh] grid-cols-[12rem_1fr] grid-rows-[auto_1fr]">
                             <aside class="row-span-full flex flex-col gap-4 bg-white p-2 shadow-[4px_0_4px_-5px_#00000040]">
-                                <h2 class="mb-16 text-center text-xl font-bold">
-                                    Curt Inventory
-                                </h2>
+                                <img src="/public/logo.png" alt="logo" />
                                 <button
                                     class="sidebar-button cursor-pointer rounded-md bg-slate-800 p-2 text-slate-100 transition-colors duration-300 hover:bg-slate-800 hover:text-slate-100"
                                     hx-get="/electrical-parts"
@@ -623,6 +623,9 @@ add .bg-slate-800 add .text-slate-100
                 .use(rawMaterialsPlugin)
                 .use(usersPlugin),
     )
+    .get("*", ({ redirect }) => {
+        return redirect("/");
+    })
     .listen(3000);
 
 // Base HTML Component
@@ -956,6 +959,9 @@ function SignUp() {
                 id="sign-up"
                 _={`on submit wait for htmx:afterOnLoad then target.reset() document.querySelector("#sign-up-username").focus()`}
             >
+                <div class="w-64">
+                    <img src="/public/logo.png" alt="logo" class="w-full" />
+                </div>
                 <div class="relative grid grid-cols-[max-content_1fr] items-center gap-4">
                     <label for="sign-up-username">User Name:</label>
                     <input
@@ -1041,6 +1047,9 @@ function SignIn() {
                 id="sign-in"
                 _={`on submit wait for htmx:afterOnLoad then target.reset() document.querySelector("#sign-in-username").focus()`}
             >
+                <div class="w-64">
+                    <img src="/public/logo.png" alt="logo" class="w-full" />
+                </div>
                 <div class="relative grid grid-cols-[max-content_1fr] items-center gap-4">
                     <label for="sign-in-username">User Name:</label>
                     <input
@@ -1167,13 +1176,19 @@ function UserRow<T extends User>({
                                 </svg>
                             </button>
                         )}
-                        {user.role === "user" && (
+                        <input
+                            type="hidden"
+                            value={user.role}
+                            name="role"
+                            form={`edit-${endpoint}-${user.id}`}
+                        />
+                        {user.role !== "owner" && (
                             <button
                                 id={`admin-button-${user.id}`}
                                 // hx-post={`/${endpoint}/edit`}
                                 form={`edit-${endpoint}-${user.id}`}
                                 hx-indicator="none"
-                                title="make admin"
+                                title={`make ${user.role === "admin" ? "user" : "admin"}`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
