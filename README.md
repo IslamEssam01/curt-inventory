@@ -6,6 +6,8 @@
 - **Elysia Framework**: Leverages Elysia for fast and scalable API development.
 - **Bun Runtime**: Utilizes Bun for high-performance execution.
 - **Turso Database**: Uses Turso as the primary database solution.
+- **HTMX for Frontend**: Utilizes HTMX for dynamic, server-driven UI updates without full page reloads.
+- **Hyperscript**: Employs Hyperscript as an inline scripting library for enhanced client-side interactions.
 - **Drizzle ORM**: Handles database migrations and schema management with Drizzle ORM.
 - **Efficient Inventory Tracking**: Provides tools to manage products, categories, and stock levels.
 - **User Authentication**: Secure authentication and authorization mechanisms.
