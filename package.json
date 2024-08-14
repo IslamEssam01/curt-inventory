@@ -3,6 +3,7 @@
     "version": "1.0.50",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "bun src/index.tsx",
         "dev": "bun run --watch src/index.tsx",
         "db:push": "drizzle-kit push",
         "db:studio": "drizzle-kit studio"
